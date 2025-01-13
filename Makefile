@@ -26,6 +26,13 @@ dev:
 	@cd ./tools/tlsnotary/verifier && cargo build --release
 	@cp ./tools/tlsnotary/verifier/target/release/libverifier.a ./internal/usecase/crowdfunding_usecase/
 	@nonodo -- air
+
+.PHONY: verifier
+verifier:
+	$(START_LOG)
+	@cd ./tools/tlsnotary/verifier && cargo build --release
+	@cp ./tools/tlsnotary/verifier/target/release/libverifier.a ./internal/usecase/crowdfunding_usecase/
+	$(END_LOG)
 	
 .PHONY: generate
 generate:
