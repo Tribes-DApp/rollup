@@ -9,6 +9,7 @@ import (
 	"github.com/rollmelette/rollmelette"
 	"github.com/tribeshq/tribes/internal/domain/entity"
 	"github.com/tribeshq/tribes/internal/usecase/contract_usecase"
+	"github.com/tribeshq/tribes/pkg/custom_type"
 	"github.com/tribeshq/tribes/pkg/router"
 )
 
@@ -41,6 +42,22 @@ func (h *ContractInspectHandlers) FindContractBySymbolHandler(ctx context.Contex
 	findOrderBySymbol := contract_usecase.NewFindContractBySymbolUseCase(h.ContractRepository)
 	contract, err := findOrderBySymbol.Execute(ctx, &contract_usecase.FindContractBySymbolInputDTO{
 		Symbol: symbol,
+	})
+	if err != nil {
+		return err
+	}
+	contractBytes, err := json.Marshal(contract)
+	if err != nil {
+		return fmt.Errorf("failed to marshal contract: %w", err)
+	}
+	env.Report(contractBytes)
+	return nil
+}
+
+func (h *ContractInspectHandlers) FindContractByAddressHandler(ctx context.Context, env rollmelette.EnvInspector) error {
+	findOrderByAddress := contract_usecase.NewFindContractByAddressUseCase(h.ContractRepository)
+	contract, err := findOrderByAddress.Execute(ctx, &contract_usecase.FindContractByAddressInputDTO{
+		Address: custom_type.HexToAddress(router.PathValue(ctx, "address")),
 	})
 	if err != nil {
 		return err

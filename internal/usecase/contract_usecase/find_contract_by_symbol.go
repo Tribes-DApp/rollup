@@ -7,7 +7,7 @@ import (
 )
 
 type FindContractBySymbolInputDTO struct {
-	Symbol string
+	Symbol string `json:"symbol"`
 }
 
 type FindContractBySymbolUseCase struct {
@@ -21,15 +21,15 @@ func NewFindContractBySymbolUseCase(contractRepository entity.ContractRepository
 }
 
 func (s *FindContractBySymbolUseCase) Execute(ctx context.Context, input *FindContractBySymbolInputDTO) (*FindContractOutputDTO, error) {
-	contract, err := s.ContractRepository.FindContractBySymbol(ctx, input.Symbol)
+	res, err := s.ContractRepository.FindContractBySymbol(ctx, input.Symbol)
 	if err != nil {
 		return nil, err
 	}
 	return &FindContractOutputDTO{
-		Id:        contract.Id,
-		Symbol:    contract.Symbol,
-		Address:   contract.Address,
-		CreatedAt: contract.CreatedAt,
-		UpdatedAt: contract.UpdatedAt,
+		Id:        res.Id,
+		Symbol:    res.Symbol,
+		Address:   res.Address,
+		CreatedAt: res.CreatedAt,
+		UpdatedAt: res.UpdatedAt,
 	}, nil
 }

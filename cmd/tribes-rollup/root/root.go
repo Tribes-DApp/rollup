@@ -64,22 +64,33 @@ const (
 )
 
 var (
+	verbose    bool
 	useMemoryDB bool
 	Cmd         = &cobra.Command{
 		Use:   CMD_NAME,
 		Short: "Runs Tribes Rollup",
-		Long:  `Runs Tribes Rollup`,
+		Long:  `Debt issuance through crowdfunding w/ collateralized tokenization of receivables`,
 		Run:   run,
 	}
 )
 
 func init() {
+	Cmd.Flags().BoolVar(&verbose, "verbose", false, "Show detailed logs")
+
 	Cmd.PersistentFlags().BoolVar(
 		&useMemoryDB,
 		"memory-db",
 		false,
 		"Use in-memory SQLite database instead of persistent",
 	)
+
+	Cmd.PreRun = func(cmd *cobra.Command, args []string) {
+		if verbose {
+			configs.ConfigureLogger(slog.LevelDebug)
+		} else {
+			configs.ConfigureLogger(slog.LevelInfo)
+		}
+	}
 }
 
 func run(cmd *cobra.Command, args []string) {
@@ -193,6 +204,7 @@ func NewDApp(ah *AdvanceHandlers, ih *InspectHandlers, ms *Middlewares) *router.
 
 	r.HandleInspect("contract", ih.ContractInspectHandlers.FindAllContractsHandler)
 	r.HandleInspect("contract/{symbol}", ih.ContractInspectHandlers.FindContractBySymbolHandler)
+	r.HandleInspect("contract/{address}", ih.ContractInspectHandlers.FindContractByAddressHandler)
 
 	r.HandleInspect("user", ih.UserInspectHandlers.FindAllUsersHandler)
 	r.HandleInspect("user/{address}", ih.UserInspectHandlers.FindUserByAddressHandler)
