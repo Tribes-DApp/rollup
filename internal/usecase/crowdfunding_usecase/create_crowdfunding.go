@@ -1,14 +1,5 @@
 package crowdfunding_usecase
 
-// /*
-// #cgo LDFLAGS: -L./ -lverifier
-// #cgo CFLAGS: -I./include
-
-// #include <stdint.h>
-
-// int32_t add_numbers(int32_t a, int32_t b);
-// */
-// import "C"
 import (
 	"context"
 	"fmt"
@@ -50,7 +41,12 @@ type CreateCrowdfundingUseCase struct {
 	CrowdfundingRepository  entity.CrowdfundingRepository
 }
 
-func NewCreateCrowdfundingUseCase(userRepository entity.UserRepository, contractRepository entity.ContractRepository, socialRepository entity.SocialAccountRepository, crowdfundingRepository entity.CrowdfundingRepository) *CreateCrowdfundingUseCase {
+func NewCreateCrowdfundingUseCase(
+	userRepository entity.UserRepository,
+	contractRepository entity.ContractRepository,
+	socialRepository entity.SocialAccountRepository,
+	crowdfundingRepository entity.CrowdfundingRepository,
+) *CreateCrowdfundingUseCase {
 	return &CreateCrowdfundingUseCase{
 		UserRepository:          userRepository,
 		ContractRepository:      contractRepository,
@@ -77,6 +73,7 @@ func (c *CreateCrowdfundingUseCase) Execute(ctx context.Context, input *CreateCr
 	if metadata.BlockTimestamp >= input.ClosesAt {
 		return nil, fmt.Errorf("%w: creation date cannot be greater than or equal to close date", entity.ErrInvalidCrowdfunding)
 	}
+	
 	// TODO: Add this when in prod
 	// if input.FundraisingDuration < 604800 {
 	// 	return nil, fmt.Errorf("%w: fundraising duration must be at least 7 days", entity.ErrInvalidCrowdfunding)
@@ -107,10 +104,7 @@ func (c *CreateCrowdfundingUseCase) Execute(ctx context.Context, input *CreateCr
 		}
 	}
 
-	// TODO: replace logic bellow with a call to the TLSN verifier
-	// a, b := C.int32_t(3), C.int32_t(4)
-	// result := C.add_numbers(a, b)
-	// slog.Info("TLSN verifier result", "result", result)
+	// TODO: Change this when in prod
 	mockAccount, err := entity.NewSocialAccount(creator.Id, "vitalik", 1000, "twitter", metadata.BlockTimestamp)
 	if err != nil {
 		return nil, err
@@ -119,7 +113,17 @@ func (c *CreateCrowdfundingUseCase) Execute(ctx context.Context, input *CreateCr
 		return nil, err
 	}
 
-	crowdfunding, err := entity.NewCrowdfunding(custom_type.Address(erc20Deposit.Token), uint256.MustFromBig(erc20Deposit.Amount), creator.Address, input.DebtIssued, input.MaxInterestRate, input.FundraisingDuration, input.ClosesAt, input.MaturityAt, metadata.BlockTimestamp)
+	crowdfunding, err := entity.NewCrowdfunding(
+		custom_type.Address(erc20Deposit.Token),
+		uint256.MustFromBig(erc20Deposit.Amount),
+		creator.Address,
+		input.DebtIssued,
+		input.MaxInterestRate,
+		input.FundraisingDuration,
+		input.ClosesAt,
+		input.MaturityAt,
+		metadata.BlockTimestamp,
+	)
 	if err != nil {
 		return nil, fmt.Errorf("error creating crowdfunding: %w", err)
 	}

@@ -73,8 +73,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: Build verifier
-        run: make verifier
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
