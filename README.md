@@ -161,11 +161,13 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    ❯ nonodo
    ```
 
-   2.2 Running from the package:
+   2.2 Install the tribes rollup package:
 
    ```sh
    ❯ go install github.com/tribeshq/tribes/cmd/tribes-rollup@latest
    ```
+
+   2.3 Running from the package:
 
    ```sh
    ❯ tribes-rollup --help # Using the flag --help to list all commands available
