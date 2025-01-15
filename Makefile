@@ -23,8 +23,6 @@ build:
 .PHONY: dev
 dev:
 	$(START_LOG)
-	@cd ./tools/tlsnotary/verifier && cargo build --release
-	@cp ./tools/tlsnotary/verifier/target/release/libverifier.a ./internal/usecase/crowdfunding_usecase/
 	@nonodo -- air
 
 .PHONY: verifier
