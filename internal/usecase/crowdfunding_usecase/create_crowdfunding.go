@@ -1,18 +1,17 @@
 package crowdfunding_usecase
 
-/*
-#cgo LDFLAGS: -L./ -lverifier
-#cgo CFLAGS: -I./include
+// /*
+// #cgo LDFLAGS: -L./ -lverifier
+// #cgo CFLAGS: -I./include
 
-#include <stdint.h>
+// #include <stdint.h>
 
-int32_t add_numbers(int32_t a, int32_t b);
-*/
-import "C"
+// int32_t add_numbers(int32_t a, int32_t b);
+// */
+// import "C"
 import (
 	"context"
 	"fmt"
-	"log/slog"
 
 	"github.com/holiman/uint256"
 	"github.com/rollmelette/rollmelette"
@@ -109,9 +108,9 @@ func (c *CreateCrowdfundingUseCase) Execute(ctx context.Context, input *CreateCr
 	}
 
 	// TODO: replace logic bellow with a call to the TLSN verifier
-	a, b := C.int32_t(3), C.int32_t(4)
-	result := C.add_numbers(a, b)
-	slog.Info("TLSN verifier result", "result", result)
+	// a, b := C.int32_t(3), C.int32_t(4)
+	// result := C.add_numbers(a, b)
+	// slog.Info("TLSN verifier result", "result", result)
 	mockAccount, err := entity.NewSocialAccount(creator.Id, "vitalik", 1000, "twitter", metadata.BlockTimestamp)
 	if err != nil {
 		return nil, err

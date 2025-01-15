@@ -57,3 +57,28 @@ jobs:
         run: |
           docker image tag machine:latest "${{ env.REGISTRY }}/${{ env.CARTESI_MACHINE_IMAGE_NAME }}"
           docker image push --all-tags "${{ env.REGISTRY }}/${{ env.CARTESI_MACHINE_IMAGE_NAME }}"
+
+  release:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Build verifier
+        run: make verifier
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+          workdir: ./cmd/tribes-rollup
