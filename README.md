@@ -148,7 +148,7 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    2.3 Start the application inside a Cartesi Machine unsandboxed:
 
    ```sh
-   > cartesi-machine --network \
+   ❯ cartesi-machine --network \
          --flash-drive=label:root,filename:.cartesi/image.ext2 \
          --env=ROLLUP_HTTP_SERVER_URL=http://10.0.2.2:5004 -- /var/opt/cartesi-app/app
    ```
@@ -158,17 +158,17 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    2.1 Start the development mode:
 
    ```sh
-   > nonodo
+   ❯ nonodo
    ```
 
    2.2 Running from the package:
 
    ```sh
-   > go install github.com/tribeshq/tribes/cmd/tribes-rollup@latest
+   ❯ go install github.com/tribeshq/tribes/cmd/tribes-rollup@latest
    ```
 
    ```sh
-   > tribes-rollup --help # Using the flag --help to list all commands available
+   ❯ tribes-rollup --help # Using the flag --help to list all commands available
    ```
 
 ###  Development
