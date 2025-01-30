@@ -83,7 +83,7 @@ A crowdfunding platform designed for prominent content creators, enabling them t
     To install Docker RISC-V support without using Docker Desktop, run the following command:
     
    ```shell
-   ❯ docker run --privileged --rm tonistiigi/binfmt --install all
+   docker run --privileged --rm tonistiigi/binfmt --install all
    ```
 
 2. [Download and install the latest version of Node.js](https://nodejs.org/en/download).
@@ -91,7 +91,7 @@ A crowdfunding platform designed for prominent content creators, enabling them t
 3. Cartesi CLI is an easy-to-use tool to build and deploy your dApps. To install it, run:
 
    ```shell
-   ❯ npm i -g @cartesi/cli
+   npm i -g @cartesi/cli
    ```
 
 > [!IMPORTANT]
@@ -101,12 +101,12 @@ A crowdfunding platform designed for prominent content creators, enabling them t
 > 2. Install development node:
 >
 >   ```shell
->   ❯ npm i -g nonodo
+>   npm i -g nonodo
 >   ```
 > 3. Install air ( hot reload tool ):
 >
 >   ```shell
->   ❯ go install github.com/air-verse/air@latest
+>   go install github.com/air-verse/air@latest
 >   ```
 
 ###  Running
@@ -116,19 +116,19 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    1.1 Build rollup from image:
 
    ```sh
-   ❯ docker pull ghcr.io/tribeshq/tribes-machine:latest
+   docker pull ghcr.io/tribeshq/tribes-machine:latest
    ```
 
    1.2 Generate rollup filesystem:
 
    ```sh
-   ❯ cartesi build --from-image ghcr.io/tribeshq/tribes-machine
+   cartesi build --from-image ghcr.io/tribeshq/tribes-machine
    ```
 
    1.3 Run validator node:
 
    ```sh
-   ❯ cartesi run
+   cartesi run
    ```
 
 2. Unsandboxed mode:
@@ -136,19 +136,19 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    2.1 Build rollup from image:
 
    ```sh
-   ❯ docker pull ghcr.io/tribeshq/tribes-machine:latest
+   docker pull ghcr.io/tribeshq/tribes-machine:latest
    ```
 
    2.2 Generate rollup filesystem:
 
    ```sh
-   ❯ cartesi build --from-image ghcr.io/tribeshq/tribes-machine
+   cartesi build --from-image ghcr.io/tribeshq/tribes-machine
    ```
 
    2.3 Start the application inside a Cartesi Machine unsandboxed:
 
    ```sh
-   ❯ cartesi-machine --network \
+   cartesi-machine --network \
          --flash-drive=label:root,filename:.cartesi/image.ext2 \
          --env=ROLLUP_HTTP_SERVER_URL=http://10.0.2.2:5004 -- /var/opt/cartesi-app/app
    ```
@@ -158,19 +158,19 @@ A crowdfunding platform designed for prominent content creators, enabling them t
    2.1 Start the development mode:
 
    ```sh
-   ❯ nonodo
+   nonodo
    ```
 
    2.2 Install the tribes rollup package:
 
    ```sh
-   ❯ go install github.com/tribeshq/tribes/cmd/tribes-rollup@latest
+   go install github.com/tribeshq/tribes/cmd/tribes-rollup@latest
    ```
 
    2.3 Running from the package:
 
    ```sh
-   ❯ tribes-rollup --help # Using the flag --help to list all commands available
+   tribes-rollup --help # Using the flag --help to list all commands available
    ```
 
 ###  Development
@@ -178,18 +178,18 @@ A crowdfunding platform designed for prominent content creators, enabling them t
 1. Run development node:
 
    ```sh
-   ❯ nonodo -- air
+   nonodo -- air
    ```
 
 > [!NOTE]
 > To reach the final state of the system, run the command bellow:
 >
 >   ```shell
->   ❯ make state
+>   make state
 >   ```
 
 ###  Testing
 
 ```sh
-❯ make test
+make test
 ```
